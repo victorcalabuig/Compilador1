@@ -44,6 +44,26 @@ private void inicio()
         state(this::asign);
     else if(isChar('+') || isChar('-'))
         state(this::sum);
+    else if(isChar('*'))
+        state(this::mul);
+    else if(isChar('/'))
+        state(this::divComLin);
+    else if(isChar('='))
+        state(this::rel);
+    else if(isChar('<'))
+        state(this::menor);
+    else if(isChar('>'))
+        state(this::mayor);
+    else if(isChar('!'))
+        state(this::neg);
+    else if(isChar('|'))
+        state(this::or);
+    else if(isChar('&'))
+        state(this::and);
+    else if(isChar('('))
+        state(this::ipar);
+    else if(isChar(')'))
+        state(this::dpar);
     else if(isIdCharStart())
         state(this::id);
     else if(isSpaceChar())
@@ -428,10 +448,118 @@ private void asign1()
 }
 
 
+private void mul()
+{
+    token(MUL);
+}
+
 
 private void sum()
 {
     token(SUM);
 }
+
+private void divComLin()
+{
+    if(isChar('/'))
+        state(this::comLin);
+    else if(isChar('*'))
+        state(this::comBloq);
+    else
+        token(MUL);
+}
+
+private void comLin()
+{
+    if(isChar('\n'))
+        restart();
+    else
+        state(this::comLin);
+}
+
+private void comBloq()
+{
+    if(isChar('*'))
+        state(this::comBloq1);
+    else
+        state(this::comBloq);
+}
+
+private void comBloq1()
+{
+    if(isChar('+'))
+        state(this::comBloq1);
+    else if(isChar('/'))
+        restart();
+    else
+        state(this::comBloq);
+}
+
+
+private void rel()
+{
+    token(REL);
+}
+
+private void menor()
+{
+    if(isChar('=') || isChar('>'))
+        state(this::rel);
+    else
+        token(REL);
+}
+
+private void mayor()
+{
+    if(isChar('='))
+        state(this::rel);
+    else
+        token(REL);
+}
+
+private void neg()
+{
+    token(NEG);
+}
+
+
+private void or()
+{
+    if(isChar('|'))
+        state(this::or1);
+    else
+        error();
+}
+
+private void or1()
+{
+    token(OR);
+}
+
+
+private void and()
+{
+    if(isChar('&'))
+        state(this::and1);
+    else
+        error();
+}
+
+private void and1()
+{
+    token(AND);
+}
+
+
+private void ipar()
+{
+    token(IPAR);
+}
+
+private void dpar()
+{
+    token(DPAR);
+}
+
 
 } // AFD

@@ -2,8 +2,16 @@ si s
 sino
 entero 4
 cadena hola
-mientras
+mi(entras
 fin hola
 imprimir esto im i imprimira
 cadena := "hola"
-3+-2 A
+9*9
+//esto es un comentario
+/*Esto es un comentario
+de 
+bloque*/
+/
+2=2 || 2<=2
+(2<(>2) && 2>=2
+
